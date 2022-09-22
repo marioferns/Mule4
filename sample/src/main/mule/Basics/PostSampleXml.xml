@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="PostSampleXmlFlow" doc:id="dc0d5498-de3b-414d-9b3f-fcc93770cbfa" >
+		<http:listener doc:name="Listener" doc:id="46b2a730-36a7-4ed2-b828-e89d0577e02c" config-ref="HTTP_Listener_config" path="PostSampleXml" allowedMethods="POST"/>
+		<logger level="INFO" doc:name="Logger" doc:id="05f71422-711f-4e09-b514-7c712b7e80ac" message="#[payload.Employee.EmployeeName]"/>
+	</flow>
+</mule>

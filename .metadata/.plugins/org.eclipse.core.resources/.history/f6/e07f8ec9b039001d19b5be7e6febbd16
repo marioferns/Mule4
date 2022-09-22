@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="SelectEmployeesFlow" doc:id="ed88882f-896a-4235-b064-d5e71b94b846" >
+		<http:listener doc:name="Listener" doc:id="7a952984-9625-4a69-a8c7-71e5edc138f8" config-ref="HTTP_Listener_config" path="selectEmps/{status}"/>
+		<db:select doc:name="Select" doc:id="b4de2cbe-dccb-4678-8c05-efb59b85e57d" config-ref="MSSQ_Database_Config">
+			<db:sql ><![CDATA[select EmpID, EmpName, Status from Employees where Status = :status]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	status: attributes.uriParams.status
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="05529423-b5d1-4692-94cb-68b9c9025821" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	empID: payload01.EmpID,
+	empName: payload01.EmpName,
+	status: payload01.Status
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

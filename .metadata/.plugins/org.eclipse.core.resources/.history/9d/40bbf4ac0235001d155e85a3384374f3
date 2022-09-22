@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="SyncFlowFlow" doc:id="1cfd2a36-695b-4b0f-8ea7-8d0cff80a7a3" >
+		<http:listener doc:name="Listener" doc:id="df35f15a-eefb-4416-b7f2-4b3013eed7f6" config-ref="HTTP_Listener_config" path="SyncFlow"/>
+		<set-payload value="Main Flow - Payload" doc:name="Set Payload" doc:id="9da7e4ad-262a-4198-9623-82309d369305" />
+		<logger level="INFO" doc:name="Logger" doc:id="12fb739e-bb95-4c33-ad46-3d024a01c4ba" message="Main Flow - Start"/>
+		<set-variable value="Variable created in Main Flow" doc:name="Set Variable" doc:id="a5456830-d6af-418b-9da5-f3cba7c65aaa" variableName="varMain"/>
+		<flow-ref doc:name="Flow Reference" doc:id="44b4a104-c863-4629-a43e-048b8d1b223d" />
+		<logger level="INFO" doc:name="Logger" doc:id="e6dbc26b-6678-40ee-946a-08d825eaf3e1" message="Main Flow - End"/>
+	</flow>
+	<flow name="SubFlowLogger" doc:id="908029e8-96ce-4a69-a746-c128b077ffe5" >
+		<logger level="INFO" doc:name="Logger" doc:id="33aeea8a-999d-4a7c-a883-fb8a2841e4c5" message="Sub flow - Start"/>
+		<logger level="INFO" doc:name="Logger" doc:id="49bcc4fc-fcfd-4a8b-9b7d-751358d2594b" message="Sub flow - #[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9e6f70a6-8d1c-496d-957b-caa58675a3b0" message="Sub flow - #[vars.varMain]"/>
+	</flow>
+</mule>

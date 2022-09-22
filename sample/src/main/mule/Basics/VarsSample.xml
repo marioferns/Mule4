@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="VarsSampleFlow" doc:id="520b387b-ac38-44b3-ad64-5af37eba180d" >
+		<http:listener doc:name="Listener" doc:id="650bf50b-2d73-47af-b9ad-6b1339c6ed8d" config-ref="HTTP_Listener_config" path="VarsSample"/>
+		<set-variable value="Mario Fernandes" doc:name="Set Variable" doc:id="b78427d3-2a7a-4668-a895-667f4da7c219" variableName="employeeName"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bc4afe47-b6e2-4a46-b43d-eff0b9464734" message="#[vars.employeeName]"/>
+	</flow>
+</mule>

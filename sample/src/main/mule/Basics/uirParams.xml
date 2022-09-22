@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="uirParamsFlow" doc:id="a6fd5d3e-d59e-4fdb-b494-4b02e54e3822" >
+		<http:listener doc:name="Listener" doc:id="4be6bcc0-85dc-496d-8c9c-b20c2ad199ac" config-ref="HTTP_Listener_config" path="UriParams/{employeeID}/{employeeName}/{status}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c58e7c12-88e5-4867-aacb-2a42dcef195f" message="#[attributes.uriParams.employeeID]"/>
+	</flow>
+</mule>

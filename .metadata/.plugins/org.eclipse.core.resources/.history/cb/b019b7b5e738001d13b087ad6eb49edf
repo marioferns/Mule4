@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="MSSQ_Database_Config" doc:name="Database Config" doc:id="973f36e0-21ec-41c8-8ab9-ff05fdf5f046" >
+		<db:mssql-connection host="localhost" instanceName="sqlexpress" port="1434" user="mario" password="Pass@word1" databaseName="MulesoftDB" />
+	</db:config>
+	<flow name="AddEmployeeFlow" doc:id="ce001dec-f63e-450a-9d0c-8152bb69e3d6" >
+		<http:listener doc:name="Add Employee Listener" doc:id="757abdc5-6596-4c8e-8222-8f144a971c9a" config-ref="HTTP_Listener_config" path="addEmployee"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d6b023b0-451c-44bb-993e-c910f0f6ec8f" message="Flow started"/>
+		<db:insert doc:name="Insert employee" doc:id="0bfc6307-76a2-4fac-9600-dad7d7ba6637" config-ref="MSSQ_Database_Config">
+			<db:sql ><![CDATA[Insert into Employees(EmpID, EmpName, Status) 
+Values(:empID, :empName, :status)]]></db:sql>
+			<db:input-parameters ><![CDATA[{
+	"empID": #[payload.empID],
+	"empName": #[payload.empName], 
+	"status": #[payload.status]
+}]]></db:input-parameters>
+		</db:insert>
+	</flow>
+</mule>

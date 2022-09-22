@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="AddEmployeeFlow" doc:id="ce001dec-f63e-450a-9d0c-8152bb69e3d6" >
+		<http:listener doc:name="Add Employee Listener" doc:id="757abdc5-6596-4c8e-8222-8f144a971c9a" config-ref="HTTP_Listener_config" path="addEmployee"/>
+	</flow>
+</mule>

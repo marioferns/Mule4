@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="JSON_To_JavaFlow" doc:id="bc43c4d9-7db0-4fe4-b049-1a03925b2cf1" >
+		<http:listener doc:name="Listener" doc:id="b85c58cb-323b-42a3-9932-9e3ad5ac90db" config-ref="HTTP_Listener_config" path="Json2Java" allowedMethods="POST">
+			<http:response statusCode="200" />
+		</http:listener>
+		<ee:transform doc:name="Transform Message" doc:id="5e66c00a-f9cd-49ef-9ef4-465e34ee5427" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	Book: {
+		BookName @(ID: payload.BoodID): payload.BookName,
+		Price: payload.Price,
+		Author @(Country: payload.AuthorLocation): payload.Author
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

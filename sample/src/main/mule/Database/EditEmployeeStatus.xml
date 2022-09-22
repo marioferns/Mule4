@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="EditEmployeeStatusFlow" doc:id="ae7a09b8-5416-48bf-a32d-ff02486f866d" >
+		<http:listener doc:name="Listener" doc:id="bf938557-28c6-4800-8fcf-8d6ef59bf1b6" config-ref="HTTP_Listener_config" path="editEmpStatus"/>
+		<db:update doc:name="Update" doc:id="094b352d-f1d2-47fa-a308-bee29e6753b1" config-ref="MSSQ_Database_Config">
+			<db:sql ><![CDATA[update Employees set status = :status where empID = :empID
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	"status": payload.status,
+	"empID": payload.empID
+}]]]></db:input-parameters>
+		</db:update>
+		<ee:transform doc:name="Transform Message" doc:id="7ff88c38-b228-4ec5-9fa4-bdd4b5999ce9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	status: 200,
+	result: "Success",
+	rowsAffected: payload.affectedRows default 0
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

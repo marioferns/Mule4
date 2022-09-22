@@ -1,0 +1,5 @@
+<Book>
+	<BookName ID="B1001">Learn A-B-C</BookName>
+	<Price>230</Price>
+	<Author Country="India">James Noronah</Author>
+</Book>
